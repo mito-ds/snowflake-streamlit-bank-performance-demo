@@ -12,8 +12,6 @@ AND VARIABLE_NAME in ('Total deposits', 'Estimated Insured Deposits', 'Total Int
 AND UNIT = 'USD'
 """
 
-# Why am I only getting 3 banks? Something with my filtering?
-
 
 big_banks_query = """SELECT ent.NAME
     FROM cybersyn.financial_institution_timeseries as ts
