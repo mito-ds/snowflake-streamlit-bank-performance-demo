@@ -4,6 +4,8 @@ This streamlit app helps you compare important metrics, like Total Desposits, am
 
 The app pulls data from Snowflake and uses the Mito spreadsheet for Streamlit to display it to the user. The user can further analyze the data using the spreadsheet and pre-made graphs.
 
+![Alt text](app_screenshot.png?raw=true "Streamlit App")
+
 ### Mito Streamlit Package 
 TODO: Link to docs
 
