@@ -17,7 +17,6 @@ st.title("Compare the world's largest banks")
 ##  Step 1:                     ##
 ##  Collect the data            ##
 ##                              ##
-##                              ##  
 
 # Initialize the connection to Swnowflake 
 conn = st.experimental_connection(
@@ -53,8 +52,7 @@ df = conn.query(bank_info_query, ttl=600)
 ##                                      ##
 ##  Step 2:                             ##
 ##  Clean the data before displaying it ##
-##                                      ##
-##                                      ##    
+##                                      ## 
 
 # Convert the Date column 
 df["DATE"] = pd.to_datetime(df["DATE"])
@@ -92,7 +90,6 @@ df1_pivot = df1_pivot[df1_columns]
 ##   Step 3:                        ##
 ##   Display data in a spreadsheet  ##
 ##                                  ##
-##                                  ##      
 
 dfs, code = spreadsheet(df1_pivot)
 
@@ -100,24 +97,29 @@ dfs, code = spreadsheet(df1_pivot)
 ##                                  ##
 ##   Step 4:                        ##
 ##   Create basic graphs of data    ##
-##                                  ##
-##                                  ##                
+##                                  ##           
 
 # This dataframe has all of the user edits applied to it. 
 # Use this dataframe so that the user edits are reflected in the graphs.
 updated_df = dfs["df1"]
 
-total_deposits_fig = get_plotly_fig(updated_df, 'Total deposits')
-estimated_insured_deposits_fig = get_plotly_fig(updated_df, 'Estimated Insured Deposits')
-net_operating_income_fig = get_plotly_fig(updated_df, 'Net Operating Income')
-total_interest_income_fig = get_plotly_fig(updated_df, 'Total Interest Income')
+# Before creating each graph, makes sure that the column exists in the dataframe, 
+# as the user may have deleted it through the spreadsheet.
+column_headers = list(updated_df.columns)
+if 'Total deposits' in column_headers:
+    total_deposits_fig = get_plotly_fig(updated_df, 'Total deposits')
+    st.plotly_chart(total_deposits_fig, use_container_width=True)
 
-st.plotly_chart(total_deposits_fig, use_container_width=True)
-st.plotly_chart(estimated_insured_deposits_fig, use_container_width=True)
-st.plotly_chart(net_operating_income_fig, use_container_width=True)
-st.plotly_chart(total_interest_income_fig, use_container_width=True)
+if 'Estimated Insured Deposits' in column_headers:
+    estimated_insured_deposits_fig = get_plotly_fig(updated_df, 'Estimated Insured Deposits')
+    st.plotly_chart(estimated_insured_deposits_fig, use_container_width=True)
 
-st.markdown("""
-This app is connected to a Snowflake database that contains financial and economic data aggregated by [Cybersyn](https://docs.cybersyn.com/our-data-products/economic-and-financial/financial-and-economic-essentials?utm_source=snowflake.com&utm_medium=website&utm_campaign=website_docs) from the following sources: FDIC, FFIEC, FRED, BLS, CFPB, Bank of England, Bank of International Settlements, Bank of Canada, Banco de Mexico, and Banco Central do Brasil.
-"""
-)
+if 'Net Operating Income' in column_headers:
+    net_operating_income_fig = get_plotly_fig(updated_df, 'Net Operating Income')
+    st.plotly_chart(net_operating_income_fig, use_container_width=True)
+
+if 'Total Interest Income' in column_headers:
+    total_interest_income_fig = get_plotly_fig(updated_df, 'Total Interest Income')
+    st.plotly_chart(total_interest_income_fig, use_container_width=True)
+
+st.markdown("""This app is connected to a Snowflake database that contains financial and economic data aggregated by [Cybersyn](https://docs.cybersyn.com/our-data-products/economic-and-financial/financial-and-economic-essentials?utm_source=snowflake.com&utm_medium=website&utm_campaign=website_docs) from the following sources: FDIC, FFIEC, FRED, BLS, CFPB, Bank of England, Bank of International Settlements, Bank of Canada, Banco de Mexico, and Banco Central do Brasil.""")
