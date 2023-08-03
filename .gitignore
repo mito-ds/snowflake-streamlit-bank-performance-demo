@@ -1,4 +1,4 @@
-config.toml
+.streamlit/secrets.toml
 
 venv/
 

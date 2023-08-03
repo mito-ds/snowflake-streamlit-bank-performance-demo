@@ -10,13 +10,10 @@ from graph import get_plotly_fig
 from queries import *
 import tomli
 
+ACCOUNT = st.secrets["snowflake"]["account"]
+USER = st.secrets["snowflake"]["user"]
+PASSWORD = st.secrets["snowflake"]["password"]
 
-with open("config.toml", mode="rb") as fp:
-    config = tomli.load(fp)
-
-ACCOUNT = config["snowflake"]["account"]
-USER = config["snowflake"]["user"]
-PASSWORD = config["snowflake"]["password"]
 
 st.set_page_config(layout="wide")
 st.title("Compare the world's largest banks")

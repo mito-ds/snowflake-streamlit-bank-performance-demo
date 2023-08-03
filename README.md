@@ -30,7 +30,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5. Create a file `config.toml` in the root of this folder with the following format:
+5. Create a file `.streamlit/secrets.toml` in the root folder with the following format:
 ```
 [snowflake]
 account = "xxx"
