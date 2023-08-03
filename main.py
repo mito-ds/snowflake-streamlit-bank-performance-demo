@@ -8,7 +8,15 @@ from mitosheet.streamlit.v1 import spreadsheet
 from mitosheet.public.v3 import *
 from graph import get_plotly_fig
 from queries import *
-from credentials import ACCOUNT, PASSWORD, USER
+import tomli
+
+
+with open("config.toml", mode="rb") as fp:
+    config = tomli.load(fp)
+
+ACCOUNT = config["snowflake"]["account"]
+USER = config["snowflake"]["user"]
+PASSWORD = config["snowflake"]["password"]
 
 st.set_page_config(layout="wide")
 st.title("Compare the world's largest banks")

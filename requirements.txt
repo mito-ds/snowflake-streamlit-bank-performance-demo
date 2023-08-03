@@ -1,4 +1,5 @@
 streamlit
 pandas 
 mitosheet
+tomli
 snowflake-snowpark-python[pandas]

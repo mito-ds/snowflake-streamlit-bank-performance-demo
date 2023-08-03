@@ -7,7 +7,7 @@ The app pulls data from Snowflake and uses the Mito spreadsheet for Streamlit to
 ![Alt text](app_screenshot.png?raw=true "Streamlit App")
 
 ### Mito Streamlit Package 
-TODO: Link to docs
+To learn more about creating Streamlit applications using the Mito spreadsheet, checkout the docs [here](https://docs.trymito.io/mito-for-streamlit/getting-started)
 
 ### The Data
 This app is connected to a Snowflake database that contains financial and economic data aggregated by [Cybersyn](https://docs.cybersyn.com/our-data-products/economic-and-financial/financial-and-economic-essentials?utm_source=snowflake.com&utm_medium=website&utm_campaign=website_docs) from the following sources: FDIC, FFIEC, FRED, BLS, CFPB, Bank of England, Bank of International Settlements, Bank of Canada, Banco de Mexico, and Banco Central do Brasil.
@@ -30,7 +30,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5. Create a file `credentials.py` in the root of this folder and export the variables `USER`, `PASSWORD` and `ACCOUNT` set to your Snowflake credentials
+5. Create a file `config.toml` in the root of this folder with the following format:
+```
+[snowflake]
+account = "xxx"
+user = "xxx"
+password = "xxx"
+```
 
 6. Start the streamlit app
 ```
