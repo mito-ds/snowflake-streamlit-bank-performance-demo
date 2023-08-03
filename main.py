@@ -8,13 +8,16 @@ from mitosheet.streamlit.v1 import spreadsheet
 from mitosheet.public.v3 import *
 from graph import get_plotly_fig
 from queries import *
-import tomli
 
+
+# Read the Snowflake credentials from .streamlit/secrets.toml. 
+# Use st.secrets to read the credentials so the secrets configured 
+# through the Streamlit public cloud can be accessed.
 ACCOUNT = st.secrets["snowflake"]["account"]
 USER = st.secrets["snowflake"]["user"]
 PASSWORD = st.secrets["snowflake"]["password"]
 
-
+# Set the page layout to wide so that the spreadsheet can be displayed in full width.
 st.set_page_config(layout="wide")
 st.title("Compare the world's largest banks")
 
@@ -54,10 +57,11 @@ selected_banks = st.multiselect(
 bank_info_query = get_bank_income_query(selected_banks)
 df = conn.query(bank_info_query, ttl=600)
 
-##                                      ##
-##  Step 2:                             ##
-##  Clean the data before displaying it ##
-##                                      ## 
+##                                          ##
+##  Step 2:                                 ##
+##  Clean the data before displaying it.    ##
+##  This code was generated using the       ##
+##  the Mito spreadsheet.                   ## 
 
 # Convert the Date column 
 df["DATE"] = pd.to_datetime(df["DATE"])
@@ -127,4 +131,4 @@ if 'Total Interest Income' in column_headers:
     total_interest_income_fig = get_plotly_fig(updated_df, 'Total Interest Income')
     st.plotly_chart(total_interest_income_fig, use_container_width=True)
 
-st.markdown("""This app is connected to a Snowflake database that contains financial and economic data aggregated by [Cybersyn](https://docs.cybersyn.com/our-data-products/economic-and-financial/financial-and-economic-essentials?utm_source=snowflake.com&utm_medium=website&utm_campaign=website_docs) from the following sources: FDIC, FFIEC, FRED, BLS, CFPB, Bank of England, Bank of International Settlements, Bank of Canada, Banco de Mexico, and Banco Central do Brasil.""")
+st.markdown("""This app is connected to a Snowflake database that contains financial and economic data aggregated by [Cybersyn](https://docs.cybersyn.com/our-data-products/economic-and-financial/financial-and-economic-essentials) from the following sources: FDIC, FFIEC, FRED, BLS, CFPB, Bank of England, Bank of International Settlements, Bank of Canada, Banco de Mexico, and Banco Central do Brasil.""")
